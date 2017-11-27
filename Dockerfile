@@ -45,9 +45,8 @@ RUN set -x \
 
 USER jovyan
 
-# Install Jupyter and gophernotes.
+# Install gophernotes and dependencies.
 RUN set -x \
-    ## install gophernotes
     && GOPATH=~/go go get github.com/gopherdata/gophernotes \
     && mkdir -p ~/.local/share/jupyter/kernels/gophernotes \
     && cp -r ~/go/src/github.com/gopherdata/gophernotes/kernel/* ~/.local/share/jupyter/kernels/gophernotes \
@@ -55,9 +54,7 @@ RUN set -x \
     && go get github.com/machinebox/sdk-go/textbox 
 
 USER root
-
 RUN cp /home/jovyan/go/bin/gophernotes /usr/local/bin/
-
 USER jovyan
 
 # Set GOPATH.
@@ -71,4 +68,4 @@ RUN chown -R jovyan: /home/jovyan/notebooks
 USER jovyan
 
 EXPOSE 8888
-CMD [ "jupyter", "notebook", "--no-browser", "--ip=0.0.0.0" ]
+CMD jupyter notebook --no-browser --port 8888 --ip=* --NotebookApp.token='' --NotebookApp.disable_check_xsrf=True 
