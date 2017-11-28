@@ -11,4 +11,6 @@ Build Image
     
 Run Image
 
-    $ docker run -it --rm -p 8888:8888 -t streaming_go
+    $ docker run -p8888:8888 streaming_go
+
+Open localhost:8888 in browser.
